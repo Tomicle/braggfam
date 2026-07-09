@@ -1,0 +1,47 @@
+---
+description: What this project is, how it is hosted, and how to publish changes live
+alwaysApply: true
+---
+
+# Bragg Family Website (braggfam.com)
+
+This is a small static family website — currently a single-page "Bragg Family
+Adventure Guide". There is no framework, no build step, and no package manager.
+
+## Hosting
+
+- Hosted on **GitHub Pages** from the `main` branch (root `/`) of the public
+  repo `Tomicle/braggfam` (remote `origin`).
+- Custom domain: **braggfam.com**, configured via the `CNAME` file in the repo
+  root. **Never delete or edit `CNAME`** — the custom domain breaks without it.
+- HTTPS is handled automatically by GitHub Pages (Let's Encrypt).
+- DNS lives at Namecheap: four A records on `@` pointing to GitHub Pages IPs
+  and a `www` CNAME to `tomicle.github.io`. Don't suggest DNS changes unless
+  something is broken.
+
+## File map
+
+- `index.html` — the entire live site (markup + all CSS in an inline `<style>` block)
+- `CNAME` — custom domain config for GitHub Pages (contents: `braggfam.com`)
+- `Bragg Family Adventure Guide.html` — original browser-saved source the site
+  came from. Local reference only; do NOT commit it and do NOT edit it.
+- `CLOUDFLARE-MIGRATION-PLAN.md` — future migration notes. Local only; do NOT
+  commit it (it may eventually contain family email addresses).
+- `README.md` — human-facing guide to this setup.
+
+## Publishing changes live
+
+Edit `index.html`, then commit and push to `main`:
+
+```bash
+git add index.html && git commit -m "Describe the change" && git push
+```
+
+GitHub Pages redeploys automatically; changes are live at https://braggfam.com
+in about a minute. There is nothing else to run.
+
+## Privacy rule (important)
+
+The repo is **public**. Never commit personal details: home addresses, phone
+numbers, email addresses, travel dates tied to an empty house, etc. If the
+family wants private content, that's what the Cloudflare migration plan is for.

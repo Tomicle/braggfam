@@ -1,0 +1,35 @@
+---
+description: Conventions for editing the site's HTML and CSS
+globs: **/*.html
+alwaysApply: false
+---
+
+# Editing index.html
+
+`index.html` is the entire site. Only edit this file; never edit
+`Bragg Family Adventure Guide.html` (it's an untracked backup of the original).
+
+## Conventions
+
+- All CSS lives in the single `<style>` block in `<head>`. Add styles there —
+  don't create separate `.css` files or add inline `style=""` attributes unless
+  matching existing patterns.
+- Colors come from the CSS variables in `:root` (`--canyon`, `--rust`, `--sand`,
+  `--sage`, `--teal`, `--paper`, `--ink`, `--gold`). Reuse them instead of
+  hardcoding new hex values.
+- Fonts load from Google Fonts via the `<link>` tags in `<head>`:
+  **Passion One** (headings, uppercase), **Nunito** (body), **Caveat**
+  (handwritten accents via the `.script` class). To add a font, extend the
+  Google Fonts URL rather than adding local font files.
+- The page is mobile-friendly (`viewport` meta + fluid layouts). Check that
+  changes work at narrow widths.
+- No JavaScript is currently used. Prefer keeping the site JS-free unless a
+  feature truly needs it.
+
+## Verifying changes
+
+Open the file locally in a browser before pushing:
+
+```bash
+open index.html
+```

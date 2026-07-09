@@ -1,0 +1,6 @@
+# Local reference files — never publish these to the public repo
+Bragg Family Adventure Guide.html
+CLOUDFLARE-MIGRATION-PLAN.md
+
+# OS cruft
+.DS_Store
