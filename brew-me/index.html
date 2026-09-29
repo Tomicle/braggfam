@@ -1,0 +1,559 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="robots" content="noindex">
+<title>Brew Me — the whole picture</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,900&family=Nunito:wght@600;700;800&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --forest: #0F3D2E;
+    --amber: #D4A017;
+    --cream: #F7EFE6;
+    --mocha: #6B4A2B;
+    --sage: #A7B899;
+    --card: #FFFDF9;
+    --forest-soft: #1A4C3A;
+    --cream-soft: #E9DEC9;
+  }
+  * { box-sizing: border-box; margin: 0; }
+  body {
+    background: var(--cream);
+    color: var(--forest);
+    font-family: "Nunito", -apple-system, sans-serif;
+    font-weight: 600;
+    line-height: 1.55;
+  }
+  .wrap { max-width: 1100px; margin: 0 auto; padding: 40px 20px 80px; }
+  h1, h2, .chunky { font-family: "Fraunces", Georgia, serif; font-weight: 900; line-height: 1.05; }
+  h1 { font-size: 42px; }
+  h2 { font-size: 28px; margin: 56px 0 10px; }
+  p.lead { color: var(--mocha); max-width: 780px; margin-top: 10px; }
+  p.body { color: var(--mocha); max-width: 780px; margin-top: 8px; }
+  p.body strong, p.lead strong { color: var(--forest); }
+
+  .pills { display: flex; flex-wrap: wrap; gap: 8px; margin-top: 16px; }
+  .pill {
+    background: var(--card); border: 1.5px solid var(--cream-soft);
+    border-radius: 999px; padding: 5px 14px; font-size: 13px; font-weight: 800;
+  }
+
+  .brandrow { display: flex; align-items: center; gap: 16px; }
+  .wordmark { font-family: "Fraunces", Georgia, serif; font-weight: 900; }
+  .wordmark .me { color: var(--amber); }
+
+  /* ---- phone mockups ---- */
+  .phones { display: grid; grid-template-columns: repeat(auto-fit, minmax(230px, 1fr)); gap: 18px; margin-top: 18px; align-items: start; }
+  .phones > div { max-width: 300px; }
+  .phone {
+    border-radius: 24px; overflow: hidden; height: 470px;
+    border: 1px solid var(--cream-soft);
+    display: flex; flex-direction: column; background: var(--cream);
+    box-sizing: border-box;
+  }
+  .p-forest { background: var(--forest); }
+  .p-amber { background: var(--amber); }
+  .caption { font-size: 12.5px; color: var(--mocha); margin-top: 8px; }
+  .statusbar { display: flex; justify-content: space-between; padding: 10px 16px 2px; font-size: 10px; font-weight: 800; color: var(--mocha); }
+  .p-forest .statusbar { color: var(--sage); }
+  .p-amber .statusbar { color: var(--forest); }
+  .screen { flex: 1; padding: 8px 13px 12px; display: flex; flex-direction: column; gap: 8px; overflow: hidden; }
+  .screen.center { align-items: center; justify-content: center; text-align: center; padding: 0 18px 12px; }
+  .navttl { font-family: "Fraunces", Georgia, serif; font-weight: 900; font-size: 16px; text-align: center; }
+  .kicker { font-size: 10px; font-weight: 800; letter-spacing: 0.14em; text-transform: uppercase; color: var(--amber); }
+  .subtle { font-size: 10.5px; color: var(--mocha); }
+  .p-forest .subtle { color: var(--sage); }
+
+  .mcard { background: var(--card); border-radius: 15px; padding: 10px 12px; text-align: left; }
+  .mcard.sel { border: 2px solid var(--amber); }
+  .mcard .ttl { font-family: "Fraunces", Georgia, serif; font-weight: 900; font-size: 14px; }
+  .mcard .sub { font-size: 10px; color: var(--mocha); margin-top: 1px; }
+  .mcard .fav { font-size: 10px; color: var(--amber); font-weight: 800; margin-top: 1px; }
+  .mcard.dim { opacity: 0.65; }
+  .badge { font-size: 9px; font-weight: 800; letter-spacing: 0.08em; color: var(--amber); }
+
+  .chips { display: flex; gap: 6px; margin-top: 7px; }
+  .chip { border-radius: 999px; padding: 3px 10px; font-size: 10px; font-weight: 800; }
+  .chip.sage { background: var(--sage); color: var(--forest); }
+  .chip.amber { background: var(--amber); color: var(--card); }
+
+  .cta { border-radius: 999px; padding: 10px 0; text-align: center; font-size: 12.5px; font-weight: 800; width: 100%; border: none; font-family: inherit; }
+  .cta.amber { background: var(--amber); color: var(--forest); }
+  .cta.forest { background: var(--forest); color: var(--cream); }
+  .cta.outline-cream { background: transparent; color: var(--cream); border: 2px solid var(--cream); }
+  button.cta { cursor: pointer; }
+
+  .avatar { width: 27px; height: 27px; border-radius: 50%; color: var(--cream); font-size: 11px; font-weight: 800; display: flex; align-items: center; justify-content: center; flex-shrink: 0; }
+  .contact { display: flex; align-items: center; gap: 9px; background: var(--card); border-radius: 14px; padding: 9px 11px; text-align: left; }
+  .contact.sel { border: 2px solid var(--amber); }
+  .contact .nm { font-size: 12.5px; font-weight: 800; }
+  .contact .ph { font-size: 9.5px; color: var(--mocha); }
+
+  .searchrow { display: flex; gap: 7px; }
+  .searchrow .search { flex: 1; background: var(--card); border-radius: 999px; padding: 7px 14px; font-size: 11px; color: var(--mocha); }
+  .searchrow .add { background: var(--amber); color: var(--forest); border-radius: 999px; padding: 7px 13px; font-size: 11px; font-weight: 800; }
+
+  .bubble { align-self: flex-start; max-width: 90%; background: var(--card); border-radius: 16px; border-bottom-left-radius: 5px; padding: 9px 12px; font-size: 11px; line-height: 1.55; text-align: left; }
+  .bubble a { color: var(--amber); font-weight: 800; }
+  .urlchip { background: var(--cream-soft); border-radius: 999px; padding: 4px 16px; font-size: 9.5px; font-weight: 700; color: var(--mocha); align-self: center; }
+  .quote { border-left: 3px solid var(--amber); padding-left: 9px; font-size: 11px; font-style: italic; color: var(--mocha); text-align: left; }
+  .p-forest .quote { color: var(--sage); border-color: var(--amber); }
+  .appbanner { background: var(--card); border-radius: 999px; padding: 8px 14px; font-size: 10px; font-weight: 700; text-align: center; }
+  .appbanner span { color: var(--amber); font-weight: 800; }
+  .markchip { background: var(--card); border-radius: 18px; padding: 10px 16px 6px; display: inline-flex; }
+  .check { width: 52px; height: 52px; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 22px; font-weight: 800; }
+  .tabbar { display: flex; justify-content: space-around; border-top: 1px solid var(--cream-soft); padding: 9px 0 13px; font-size: 10.5px; font-weight: 800; }
+  .tabbar .off { color: var(--sage); }
+  .notif { background: var(--card); border: 1px solid var(--cream-soft); border-radius: 14px; padding: 7px 11px; text-align: left; }
+  .notif .src { font-size: 8.5px; font-weight: 800; color: var(--mocha); }
+  .notif .msg { font-size: 10.5px; font-weight: 700; margin-top: 1px; }
+  .spacer { flex: 1; }
+
+  /* ---- content blocks ---- */
+  .callout { background: var(--card); border: 1.5px solid var(--cream-soft); border-radius: 16px; padding: 16px 18px; margin-top: 14px; max-width: 780px; }
+  .callout h3 { font-size: 14px; font-weight: 800; margin-bottom: 4px; }
+  .callout p { font-size: 13.5px; color: var(--mocha); }
+  .phones .callout { margin-top: 0; }
+
+  table { border-collapse: collapse; margin-top: 14px; background: var(--card); border-radius: 14px; overflow: hidden; }
+  th, td { text-align: left; padding: 9px 16px; font-size: 13.5px; border-bottom: 1px solid var(--cream-soft); }
+  th { font-weight: 800; }
+  td { color: var(--mocha); }
+  tr:last-child td { border-bottom: none; }
+  td.num { text-align: right; color: var(--forest); }
+  td strong { color: var(--forest); }
+
+  .swatches { display: flex; flex-direction: column; gap: 8px; margin-top: 12px; }
+  .swatch { display: flex; align-items: center; gap: 10px; font-size: 13px; }
+  .swatch i { width: 24px; height: 24px; border-radius: 50%; flex-shrink: 0; border: 1px solid var(--cream-soft); }
+  .swatch b { font-weight: 800; }
+  .swatch span { color: var(--mocha); }
+
+  ul.qs { margin: 12px 0 0 18px; max-width: 780px; }
+  ul.qs li { font-size: 13.5px; color: var(--mocha); margin-bottom: 7px; }
+
+  footer { margin-top: 60px; font-size: 12px; color: var(--mocha); border-top: 1px solid var(--cream-soft); padding-top: 16px; }
+  .clickable { cursor: pointer; }
+</style>
+</head>
+<body>
+<div class="wrap">
+
+  <!-- ================= HEADER ================= -->
+  <div class="brandrow">
+    <svg width="86" height="60" viewBox="0 0 92 64" aria-hidden="true">
+      <ellipse cx="25" cy="18" rx="3.6" ry="7.5" fill="#A7B899" transform="rotate(-24 25 18)"/>
+      <ellipse cx="33" cy="16" rx="3.2" ry="6.5" fill="#A7B899" transform="rotate(18 33 16)"/>
+      <rect x="16" y="27" width="27" height="25" rx="6" fill="#0F3D2E"/>
+      <path d="M16 32 H11 a8 8 0 0 0 0 17 H16 v-5.5 H12.5 a3.5 3.5 0 0 1 0 -6 H16 Z" fill="#0F3D2E"/>
+      <line x1="66" y1="12" x2="66" y2="5" stroke="#D4A017" stroke-width="2.4" stroke-linecap="round"/>
+      <line x1="57" y1="14" x2="53.5" y2="8.5" stroke="#D4A017" stroke-width="2.4" stroke-linecap="round"/>
+      <line x1="75" y1="14" x2="78.5" y2="8.5" stroke="#D4A017" stroke-width="2.4" stroke-linecap="round"/>
+      <path d="M54 21 L78 21 L74.5 52 L57.5 52 Z" fill="#D4A017"/>
+      <circle cx="58" cy="21" r="4.6" fill="#F7EFE6"/><circle cx="66" cy="19" r="5.4" fill="#F7EFE6"/><circle cx="74" cy="21" r="4.6" fill="#F7EFE6"/>
+      <rect x="59.5" y="28" width="3.4" height="15" rx="1.7" fill="#F7EFE6" opacity="0.45"/>
+    </svg>
+    <h1>Brew Me — the whole picture</h1>
+  </div>
+  <p class="lead">
+    Buy a friend a drink at a bar near them, from your phone. They get a text, walk in, and
+    the bartender taps their screen to pour it. Warmer than Venmo, lighter than a gift — for
+    the thank-you, the birthday, the "rough week, this one's on me." Brew Me facilitates the
+    one payment and takes a cut; the bar gets a customer through the door who usually stays
+    for two or three more.
+  </p>
+  <div class="pills">
+    <div class="pill">recipient needs no app</div>
+    <div class="pill">drinks never expire</div>
+    <div class="pill">tap-to-redeem, no bar hardware</div>
+    <div class="pill">location by zipcode, not GPS</div>
+    <div class="pill">launch: Midtown Sacramento</div>
+  </div>
+
+  <!-- ================= HOW IT WORKS ================= -->
+  <h2>How it works</h2>
+  <p class="body">
+    Participating venues are <strong>Brew Buddies</strong> — not "bars," because the list
+    includes any place that pours: cocktail bars, breweries, the burger joint with taps, and
+    eventually coffee shops ("brew" covers both). Each venue sets a few price tiers (beer $8,
+    cocktail $14) and gets a comp button on its POS — no hardware, no app, no POS change.
+    Recipients are found by <strong>favorites plus a zipcode, never GPS</strong>: account
+    holders pick favorite spots ("so people know where to buy you a drink") and save a zip;
+    for anyone else, the sender types a zip.
+  </p>
+
+  <!-- ================= SENDER FLOW ================= -->
+  <h2>Sending a drink</h2>
+  <div class="phones">
+    <div>
+      <div class="phone">
+        <div class="statusbar"><span>6:37</span><span>brew me</span></div>
+        <div class="screen">
+          <div class="navttl" style="font-size:19px">who's it for?</div>
+          <div class="searchrow"><div class="search">search contacts</div><div class="add">+ add</div></div>
+          <div class="contact sel">
+            <div class="avatar" style="background:var(--forest)">S</div>
+            <div><div class="nm">Sawyer Christian</div><div class="ph">on brew me · Midtown 95811</div></div>
+          </div>
+          <div class="contact">
+            <div class="avatar" style="background:var(--forest)">J</div>
+            <div><div class="nm">Jack Lee</div><div class="ph">on brew me · East Sac 95819</div></div>
+          </div>
+          <div class="contact">
+            <div class="avatar" style="background:var(--sage)">M</div>
+            <div><div class="nm">Marcus Xavier</div><div class="ph">(916) 555-0163 · Downtown 95814</div></div>
+          </div>
+        </div>
+      </div>
+      <div class="caption">1. Pick a friend. Accounts show their saved neighborhood; adding someone new (from contacts or a typed number) asks for a required name and zip.</div>
+    </div>
+    <div>
+      <div class="phone">
+        <div class="statusbar"><span>6:37</span><span>brew me</span></div>
+        <div class="screen">
+          <div class="navttl">brew buddies near Sawyer</div>
+          <div class="subtle" style="text-align:center">his favorites first · then by distance from 95811</div>
+          <div class="mcard sel">
+            <div class="ttl">Kupros Craft House</div>
+            <div class="fav">Sawyer's favorite · bar · 0.2 mi</div>
+            <div class="chips"><span class="chip sage">beer $8</span><span class="chip amber">cocktail $14</span></div>
+          </div>
+          <div class="mcard"><div class="ttl">The Golden Bear</div><div class="sub">bar · 0.4 mi · beer $7 · cocktail $12</div></div>
+          <div class="mcard"><div class="ttl">Burgers &amp; Brew</div><div class="sub">restaurant · 0.5 mi · beer $7 · shake $6</div></div>
+          <div class="mcard"><div class="ttl">der Biergarten</div><div class="sub">beer garden · 0.6 mi · beer $7 · cider $8</div></div>
+        </div>
+      </div>
+      <div class="caption">2. Pick a venue. Sawyer's favorites come first — he already said where to buy him a drink.</div>
+    </div>
+    <div>
+      <div class="phone">
+        <div class="statusbar"><span>6:37</span><span>brew me</span></div>
+        <div class="screen">
+          <div class="navttl">Kupros Craft House</div>
+          <div class="kicker" style="color:var(--mocha)">pick a tier</div>
+          <div class="mcard" style="display:flex;justify-content:space-between"><span>beer</span><span style="color:var(--mocha)">$8</span></div>
+          <div class="mcard sel" style="display:flex;justify-content:space-between;font-weight:800"><span>any cocktail</span><span>$14</span></div>
+          <div class="kicker" style="color:var(--mocha)">add a message</div>
+          <div class="mcard" style="font-size:11px">Congrats on the new job — first round's on me.</div>
+          <div class="spacer"></div>
+          <div style="display:flex;justify-content:space-between;font-size:10.5px;color:var(--mocha)"><span>tip the bartender (100% passes through)</span><span style="color:var(--forest)">+$2.00</span></div>
+          <div style="display:flex;justify-content:space-between;font-size:12px;font-weight:800"><span>total</span><span>$16.00</span></div>
+          <div class="cta forest">pay $16.00</div>
+        </div>
+      </div>
+      <div class="caption">3. Pick a tier, add a message and an optional tip (100% passes through), pay once with Apple Pay.</div>
+    </div>
+    <div>
+      <div class="phone clickable" id="sentPhone" title="tap for another confirmation">
+        <div class="statusbar"><span>6:37</span><span>brew me</span></div>
+        <div class="screen center">
+          <div class="check" style="background:var(--amber);color:var(--forest)">✓</div>
+          <div class="chunky" style="font-size:30px">sent</div>
+          <div class="subtle" id="sentMsg" style="font-size:12px;line-height:1.6">thanks for sending that brew — you'll get a ping when they cash it in</div>
+        </div>
+      </div>
+      <div class="caption">4. One of a rotating pool of confirmations (<strong>tap the phone to cycle</strong>) — always "they," since gender is never known. Delivery: push if they're on brew me, texted link if not.</div>
+    </div>
+  </div>
+
+  <!-- ================= TEXT ROUTE ================= -->
+  <h2>Receiving — the text route (no account needed)</h2>
+  <p class="body">
+    How a drink lands for someone not on Brew Me yet — Marcus, say. The whole
+    receive-and-redeem path runs from one texted link: no install, no signup. This is the
+    acquisition funnel; after the pour, "send one back" is the hook that takes him to the app.
+  </p>
+  <div class="phones">
+    <div>
+      <div class="phone">
+        <div class="statusbar"><span>6:37</span><span></span></div>
+        <div class="screen">
+          <div class="navttl" style="font-size:12px">+1 (916) 555-0114</div>
+          <div class="subtle" style="text-align:center;font-size:9px">today 6:37 pm</div>
+          <div class="bubble">Tom bought you a drink at Kupros Craft House — any cocktail, on him. View &amp; redeem: <a>brewme.app/d/x7k2q</a></div>
+          <div class="subtle" style="font-size:9px">brew me · reply STOP to opt out</div>
+        </div>
+      </div>
+      <div class="caption">1. A plain SMS with a link.</div>
+    </div>
+    <div>
+      <div class="phone">
+        <div class="statusbar"><span>6:37</span><span></span></div>
+        <div class="screen">
+          <div class="urlchip">brewme.app</div>
+          <div class="kicker">Tom sent you</div>
+          <div class="chunky" style="font-size:24px">any cocktail</div>
+          <div style="font-size:12px;font-weight:700">Kupros Craft House · Midtown Sacramento</div>
+          <div class="subtle">1217 21st St · never expires</div>
+          <div class="quote">"Congrats on the new job — first round's on me."</div>
+          <div class="spacer"></div>
+          <div class="appbanner">brew me is better in the app — <span>download now</span></div>
+          <div class="cta amber">use at the bar</div>
+          <div class="cta" style="background:var(--cream-soft);color:var(--forest)">get directions</div>
+        </div>
+      </div>
+      <div class="caption">2. The link opens a mobile web page: what, where, from whom — plus the app pitch.</div>
+    </div>
+    <div>
+      <div id="redeemReady">
+        <div class="phone p-forest">
+          <div class="statusbar"><span>6:37</span><span></span></div>
+          <div class="screen center">
+            <div class="markchip">
+              <svg width="63" height="44" viewBox="0 0 92 64" aria-hidden="true">
+                <ellipse cx="25" cy="18" rx="3.6" ry="7.5" fill="#A7B899" transform="rotate(-24 25 18)"/>
+                <ellipse cx="33" cy="16" rx="3.2" ry="6.5" fill="#A7B899" transform="rotate(18 33 16)"/>
+                <rect x="16" y="27" width="27" height="25" rx="6" fill="#0F3D2E"/>
+                <path d="M16 32 H11 a8 8 0 0 0 0 17 H16 v-5.5 H12.5 a3.5 3.5 0 0 1 0 -6 H16 Z" fill="#0F3D2E"/>
+                <line x1="66" y1="12" x2="66" y2="5" stroke="#D4A017" stroke-width="2.4" stroke-linecap="round"/>
+                <line x1="57" y1="14" x2="53.5" y2="8.5" stroke="#D4A017" stroke-width="2.4" stroke-linecap="round"/>
+                <line x1="75" y1="14" x2="78.5" y2="8.5" stroke="#D4A017" stroke-width="2.4" stroke-linecap="round"/>
+                <path d="M54 21 L78 21 L74.5 52 L57.5 52 Z" fill="#D4A017"/>
+                <circle cx="58" cy="21" r="4.6" fill="#F7EFE6"/><circle cx="66" cy="19" r="5.4" fill="#F7EFE6"/><circle cx="74" cy="21" r="4.6" fill="#F7EFE6"/>
+              </svg>
+            </div>
+            <div class="kicker">good for one</div>
+            <div class="chunky" style="font-size:24px;color:var(--cream)">any cocktail</div>
+            <div class="subtle">Kupros · for Marcus</div>
+            <button class="cta amber" id="pourBtn" style="margin-top:8px">bartender: tap to pour</button>
+            <div class="subtle" style="max-width:180px">hand your phone to the bartender — don't tap this yourself</div>
+            <div class="spacer"></div>
+            <div class="subtle" style="font-size:9px">one-time use · never expires</div>
+          </div>
+        </div>
+      </div>
+      <div id="redeemPoured" hidden>
+        <div class="phone p-amber clickable" id="pouredPhone" title="tap to reset">
+          <div class="statusbar"><span>6:37</span><span></span></div>
+          <div class="screen center">
+            <div class="check" style="background:var(--forest);color:var(--cream)">✓</div>
+            <div class="chunky" style="font-size:30px">poured</div>
+            <div style="font-size:12px;font-weight:800"><span id="pourTime">7:42 pm</span> · Kupros Craft House</div>
+            <div style="font-size:11px;color:var(--mocha);font-weight:700">any cocktail · for Marcus</div>
+            <div class="cta forest" style="margin-top:8px;width:82%">send one back to Tom</div>
+            <div style="font-size:9px;color:var(--mocha);font-weight:700">no account yet — send one back opens the app download</div>
+            <div class="spacer"></div>
+            <div style="font-size:9px;color:var(--mocha);font-weight:800">one-time use · this drink is spent · tap to reset</div>
+          </div>
+        </div>
+      </div>
+      <div class="caption">3. At the bar, the bartender taps the recipient's phone — verify and expire in one interaction (GoFan-style). <strong>Try tapping it.</strong></div>
+    </div>
+    <div>
+      <div class="callout">
+        <h3>Why tap-to-redeem works</h3>
+        <p>
+          The bar installs nothing and scans nothing. The bartender personally kills the
+          voucher, so they know it wasn't a screenshot; every pour is timestamped server-side
+          for the venue dashboard; the fraud ceiling per incident is exactly one drink.
+          Pacing rule: one redemption per recipient per venue per ~3 hours.
+        </p>
+      </div>
+    </div>
+  </div>
+
+  <!-- ================= APP ROUTE ================= -->
+  <h2>Receiving — in the app</h2>
+  <p class="body">
+    The same gift once Sawyer has an account: push instead of SMS, a wallet of drinks,
+    favorites, and the send-one-back loop that turns one gift into two users. Redemption is
+    identical, so the bar never cares which route the drink came from.
+  </p>
+  <div class="phones">
+    <div>
+      <div class="phone">
+        <div class="statusbar"><span>6:37</span><span></span></div>
+        <div class="screen" style="padding-bottom:0">
+          <div class="notif"><div class="src">BREW ME · now</div><div class="msg">Tom sent you a drink at Kupros Craft House</div></div>
+          <div class="navttl">your brews</div>
+          <div class="mcard sel"><div class="badge">NEW</div><div class="ttl">any cocktail</div><div class="sub">Kupros Craft House · from Tom</div></div>
+          <div class="mcard dim"><div class="ttl" style="color:var(--mocha)">beer</div><div class="sub">Burgers &amp; Brew · from Jack Lee · poured Sep 12</div></div>
+          <div class="spacer"></div>
+        </div>
+        <div class="tabbar"><span>brews</span><span class="off">send</span><span class="off">profile</span></div>
+      </div>
+      <div class="caption">1. A push lands in the drink wallet; spent drinks stay as history. Below the wallet, a "sent brews" log tracks everything you've sent out.</div>
+    </div>
+    <div>
+      <div class="phone p-forest">
+        <div class="statusbar"><span>6:37</span><span></span></div>
+        <div class="screen center">
+          <div class="markchip">
+            <svg width="63" height="44" viewBox="0 0 92 64" aria-hidden="true">
+              <ellipse cx="25" cy="18" rx="3.6" ry="7.5" fill="#A7B899" transform="rotate(-24 25 18)"/>
+              <ellipse cx="33" cy="16" rx="3.2" ry="6.5" fill="#A7B899" transform="rotate(18 33 16)"/>
+              <rect x="16" y="27" width="27" height="25" rx="6" fill="#0F3D2E"/>
+              <path d="M16 32 H11 a8 8 0 0 0 0 17 H16 v-5.5 H12.5 a3.5 3.5 0 0 1 0 -6 H16 Z" fill="#0F3D2E"/>
+              <line x1="66" y1="12" x2="66" y2="5" stroke="#D4A017" stroke-width="2.4" stroke-linecap="round"/>
+              <line x1="57" y1="14" x2="53.5" y2="8.5" stroke="#D4A017" stroke-width="2.4" stroke-linecap="round"/>
+              <line x1="75" y1="14" x2="78.5" y2="8.5" stroke="#D4A017" stroke-width="2.4" stroke-linecap="round"/>
+              <path d="M54 21 L78 21 L74.5 52 L57.5 52 Z" fill="#D4A017"/>
+              <circle cx="58" cy="21" r="4.6" fill="#F7EFE6"/><circle cx="66" cy="19" r="5.4" fill="#F7EFE6"/><circle cx="74" cy="21" r="4.6" fill="#F7EFE6"/>
+            </svg>
+          </div>
+          <div class="kicker">Tom sent you</div>
+          <div class="chunky" style="font-size:24px;color:var(--cream)">any cocktail</div>
+          <div style="font-size:12px;color:var(--cream);opacity:.85;font-weight:700">Kupros Craft House · Midtown</div>
+          <div class="quote" style="text-align:center;border:none;padding:0">"Congrats on the new job —<br>first round's on me."</div>
+          <div class="kicker" style="font-size:9.5px">+ add Kupros to your favorite spots</div>
+          <div class="cta amber" style="margin-top:6px">use at the bar</div>
+          <div class="cta outline-cream">say thanks — send one back</div>
+        </div>
+      </div>
+      <div class="caption">2. The native drink screen: no signup pitch — favorites and a one-tap thank-you instead.</div>
+    </div>
+    <div>
+      <div class="callout">
+        <h3>What the account buys</h3>
+        <p>
+          Three tabs: <strong>brews</strong> (the wallet), <strong>send</strong>, and
+          <strong>profile</strong> — where you set your zipcode and favorite spots. Push
+          instead of SMS, and send one back in two taps. The poured screen prompts the
+          thank-you drink — the highest-intent moment in the product.
+        </p>
+      </div>
+    </div>
+  </div>
+
+  <!-- ================= MONEY ================= -->
+  <h2>The money</h2>
+  <p class="body">
+    Stripe Connect: Brew Me is the platform, each venue gets an Express account (Stripe
+    handles onboarding, KYC, bank details — we never hold card data or venue banking). One
+    charge, split instantly. <strong>Venues are paid on purchase and drinks never expire</strong>
+    — no funds held, no gift-card expiry law, no escheatment. A worked $10 example with a 15% cut:
+  </p>
+  <table>
+    <tr><th>Line</th><th style="text-align:right">Amount</th></tr>
+    <tr><td>Sender pays</td><td class="num">$10.00</td></tr>
+    <tr><td>Stripe card fee (~2.9% + $0.30)</td><td class="num">−$0.59</td></tr>
+    <tr><td>Brew Me cut (15%)</td><td class="num">−$1.50</td></tr>
+    <tr><td><strong>Venue receives</strong></td><td class="num"><strong>~$7.91</strong></td></tr>
+  </table>
+  <p class="body">
+    Tipping is sender-only: an optional tip at purchase rides in the same charge and passes
+    through 100% to the venue — recipients tip the normal way, on the tab the 2–3-drink
+    thesis says they'll open anyway.
+  </p>
+  <div class="callout">
+    <h3>If a venue leaves or closes</h3>
+    <p>
+      A venue that chooses to leave funds its unredeemed drinks (signup-agreement clause,
+      collected via Stripe account debit) and the drinks transfer nearby at no cost to us. A
+      venue that goes out of business can't be collected from — there, the transfer is Brew
+      Me's unadvertised courtesy.
+    </p>
+  </div>
+  <p class="body">
+    <strong>The venue pitch:</strong> a Brew Me drink is a customer walking in the door; the
+    average visit is 2–3 drinks plus food, so the discounted first drink is customer
+    acquisition priced below ads. Zero setup. The venue dashboard (web login, no install)
+    shows every pour with timestamps, payout history, and the outstanding-drinks count; v2
+    adds trends and an average-spend proxy — the number that proves "the comped $8 beer
+    turned into a $47 tab."
+  </p>
+
+  <!-- ================= BRAND ================= -->
+  <h2>The brand</h2>
+  <div class="brandrow" style="margin-top:14px;flex-wrap:wrap;gap:28px">
+    <div style="background:var(--card);border:1.5px solid var(--cream-soft);border-radius:16px;padding:18px 26px;text-align:center">
+      <svg width="92" height="64" viewBox="0 0 92 64" aria-hidden="true">
+        <ellipse cx="25" cy="18" rx="3.6" ry="7.5" fill="#A7B899" transform="rotate(-24 25 18)"/>
+        <ellipse cx="33" cy="16" rx="3.2" ry="6.5" fill="#A7B899" transform="rotate(18 33 16)"/>
+        <rect x="16" y="27" width="27" height="25" rx="6" fill="#0F3D2E"/>
+        <path d="M16 32 H11 a8 8 0 0 0 0 17 H16 v-5.5 H12.5 a3.5 3.5 0 0 1 0 -6 H16 Z" fill="#0F3D2E"/>
+        <line x1="66" y1="12" x2="66" y2="5" stroke="#D4A017" stroke-width="2.4" stroke-linecap="round"/>
+        <line x1="57" y1="14" x2="53.5" y2="8.5" stroke="#D4A017" stroke-width="2.4" stroke-linecap="round"/>
+        <line x1="75" y1="14" x2="78.5" y2="8.5" stroke="#D4A017" stroke-width="2.4" stroke-linecap="round"/>
+        <path d="M54 21 L78 21 L74.5 52 L57.5 52 Z" fill="#D4A017"/>
+        <circle cx="58" cy="21" r="4.6" fill="#F7EFE6"/><circle cx="66" cy="19" r="5.4" fill="#F7EFE6"/><circle cx="74" cy="21" r="4.6" fill="#F7EFE6"/>
+        <rect x="59.5" y="28" width="3.4" height="15" rx="1.7" fill="#F7EFE6" opacity="0.45"/>
+      </svg>
+      <div class="wordmark" style="font-size:26px">brew <span class="me">me</span></div>
+    </div>
+    <div class="swatches">
+      <div class="swatch"><i style="background:#0F3D2E"></i><span><b>Forest</b> #0F3D2E — main: dark ground, light-mode ink, the mug</span></div>
+      <div class="swatch"><i style="background:#D4A017"></i><span><b>Amber</b> #D4A017 — accent: CTAs, the pint, the poured screen</span></div>
+      <div class="swatch"><i style="background:#F7EFE6"></i><span><b>Cream</b> #F7EFE6 — light ground, dark-mode text</span></div>
+      <div class="swatch"><i style="background:#6B4A2B"></i><span><b>Mocha</b> #6B4A2B — secondary text; the coffee color, waiting</span></div>
+      <div class="swatch"><i style="background:#A7B899"></i><span><b>Sage</b> #A7B899 — soft chips, sprigs, quiet text on forest</span></div>
+    </div>
+  </div>
+  <p class="body">
+    Warm craft: chunky lowercase wordmark (Fraunces at black weights — the font this page is
+    set in; Nunito for body), a flat mug-and-pint mark with sage sprigs, soft rounded
+    surfaces. Light mode is forest-on-cream, dark mode is cream-on-forest, amber identical
+    in both. Redemption flips the whole screen to amber — the one full-color moment,
+    recognizable across a dim bar. Voice is lowercase and warm: "first round's on me,"
+    "poured," "send one back" — the copy sounds like the friend, not the platform. No
+    exclamation marks.
+  </p>
+
+  <!-- ================= ROADMAP ================= -->
+  <h2>Versions and platforms</h2>
+  <table>
+    <tr><th>Version</th><th>What ships</th></tr>
+    <tr><td style="white-space:nowrap"><strong>v1 — one neighborhood</strong></td><td>iOS sender + recipient app, SMS links, recipient web page (receive + redeem with no install), tap-to-redeem, Stripe Connect paying venues on purchase, sender tips, venue dashboard with outstanding count. Midtown Sacramento, venues onboarded by hand — Kupros first.</td></tr>
+    <tr><td style="white-space:nowrap">v2 — merchant tools</td><td>QR-scan redemption fallback, dashboard trends and average-spend proxy, reminder nudges, self-serve venue onboarding, Android app.</td></tr>
+    <tr><td style="white-space:nowrap">v3 — POS + expansion</td><td>Toast/Square integration (gift-card-style redemption, real average-spend), multi-city, occasions (rounds, group gifts, corporate), coffee shops — same rails, no alcohol law, and "brew" already covers it.</td></tr>
+  </table>
+  <div class="callout">
+    <h3>Why iOS-first still covers Android users on day one</h3>
+    <p>
+      The recipient web page means an Android user can receive, view, and redeem a drink
+      with zero install from the first day — only <em>sending</em> requires the app. That
+      makes the Android app a v2 growth feature, not a v1 gap, and the web drink page plus a
+      simple landing page is the whole website v1 needs.
+    </p>
+  </div>
+
+  <!-- ================= OPEN QUESTIONS ================= -->
+  <h2>Open questions</h2>
+  <ul class="qs">
+    <li>Fee placement: absorbed cut (sender pays a flat $10 — current lean) vs. a visible service fee on top.</li>
+    <li>Alcohol law: voucher framing, 21+ attestation, and happy-hour restrictions need counsel per state before launch.</li>
+    <li>"Brew Buddies" naming: warm, but "buddy" can also read as the friend you're sending to — gut-check before App Store copy.</li>
+    <li>Redemption pacing: is ~3 hours per recipient per venue the right window?</li>
+    <li>Android timing and stack: native Kotlin vs. cross-platform, decided when v1 iOS proves the loop.</li>
+    <li>Brew Me's cut: 15% is the working number — validate against venue appetite in Sacramento pitches.</li>
+  </ul>
+
+  <footer>
+    brew me · concept overview · midtown sacramento pilot · the iOS app's first pass is
+    built and running on sample data
+  </footer>
+</div>
+
+<script>
+  // Sent-screen confirmations — always "they."
+  var sentMessages = [
+    "thanks for sending that brew — you'll get a ping when they cash it in",
+    "good one. we'll let you know the moment it's poured",
+    "cheers to you — updates when they claim it",
+    "that's a nice thing you just did. we'll ping you when it's poured"
+  ];
+  var sentIndex = 0;
+  document.getElementById("sentPhone").addEventListener("click", function () {
+    sentIndex = (sentIndex + 1) % sentMessages.length;
+    document.getElementById("sentMsg").textContent = sentMessages[sentIndex];
+  });
+
+  // The bartender's tap: verify and expire in one interaction.
+  document.getElementById("pourBtn").addEventListener("click", function () {
+    var now = new Date();
+    var h = now.getHours() % 12 || 12;
+    var m = String(now.getMinutes()).padStart(2, "0");
+    document.getElementById("pourTime").textContent = h + ":" + m + " " + (now.getHours() >= 12 ? "pm" : "am");
+    document.getElementById("redeemReady").hidden = true;
+    document.getElementById("redeemPoured").hidden = false;
+  });
+  document.getElementById("pouredPhone").addEventListener("click", function () {
+    document.getElementById("redeemPoured").hidden = true;
+    document.getElementById("redeemReady").hidden = false;
+  });
+</script>
+</body>
+</html>
